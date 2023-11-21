@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dfkxjyokirdih"
+path="res://.godot/imported/DIR_OBJ_X.obj-12a248e226102949b91eb8d12331208e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/DIR_OBJ_X.obj-12a248e226102949b91eb8d12331208e.mesh"]
+
+source_file="res://Red-Eye/DIR_OBJ_X.obj"
+dest_files=["res://.godot/imported/DIR_OBJ_X.obj-12a248e226102949b91eb8d12331208e.mesh", "res://.godot/imported/DIR_OBJ_X.obj-12a248e226102949b91eb8d12331208e.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=false
