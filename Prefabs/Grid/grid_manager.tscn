@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqcyx8p13wa4r"]
+
+[ext_resource type="Script" path="res://Scripts/Grid/GridGenerate.gd" id="1_etepj"]
+
+[node name="GridManager" type="Node3D"]
+script = ExtResource("1_etepj")
+
+[node name="GridHolder" type="Node3D" parent="."]
