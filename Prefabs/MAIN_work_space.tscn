@@ -155,6 +155,26 @@ grow_horizontal = 2
 size_flags_vertical = 0
 theme_override_styles/panel = ExtResource("4_slkob")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UI_actual/WorkSpace/ProgrammTools"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="UI/UI_actual/WorkSpace/ProgrammTools/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme = ExtResource("7_102ji")
+text = "Играть"
+
+[node name="Button2" type="Button" parent="UI/UI_actual/WorkSpace/ProgrammTools/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme = ExtResource("7_102ji")
+text = "запечь свет"
+
 [node name="WorkSpaceCont" type="MarginContainer" parent="UI/UI_actual/WorkSpace"]
 layout_mode = 1
 anchors_preset = 15
