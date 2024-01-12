@@ -51,11 +51,17 @@ shader_parameter/cam_vw = ExtResource("8_vuxlg")
 
 [node name="CameraNode" parent="3D" instance=ExtResource("1_flgxu")]
 
+[node name="SubViewportMain" parent="3D/CameraNode" index="4"]
+size = Vector2i(640, 412)
+
 [node name="PivotY_And_Move" parent="3D/CameraNode/SubViewportMain" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Camera3D" parent="3D/CameraNode/SubViewportMain/PivotY_And_Move/PivotX" index="0"]
 environment = SubResource("Environment_cxvo5")
+
+[node name="SubViewportTools" parent="3D/CameraNode/SubViewportMain/PivotY_And_Move/PivotX/Camera3D/SubViewportContainer" index="0"]
+size = Vector2i(640, 412)
 
 [node name="ToolHolder" parent="3D" instance=ExtResource("1_3fwnl")]
 

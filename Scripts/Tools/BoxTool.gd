@@ -6,6 +6,9 @@ extends Node3D
 
 var GridY : float
 
+var ViewWidth : int
+var ViewHeigh : int
+
 # vector math
 var PointDistance
 
@@ -16,6 +19,8 @@ func _ready():
 func _process(_delta):
 	PointDistance = abs(tan(Camera.global_rotation.x- PI/2))
 	
+	var mouse_position =get_viewport().get_mouse_position()
+	
 	var CameraY = Camera.global_position.y
 	var Direction = -Camera.global_basis.z
 
@@ -23,7 +28,7 @@ func _process(_delta):
 	Direction = Direction.normalized()
 	
 	#DO NOT CHANGE | СУКА ЛОМАЕТСЯ ТОКА ПОВОД ДАЙ :: В случае чего хотябы закоментировать
-	DebugPoint.transform.origin = Camera.global_position + Direction * PointDistance * CameraY
+	DebugPoint.transform.origin = Camera.global_position + Direction * PointDistance * abs(CameraY)
 	DebugPoint.transform.origin.y = GridY
 	
 	
