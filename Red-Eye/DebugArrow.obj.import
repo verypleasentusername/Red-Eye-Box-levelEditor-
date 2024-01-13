@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c1wsbi7pi866a"
+path="res://.godot/imported/DebugArrow.obj-00af5513f3cdc4af5bc64f5e8c80406b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/DebugArrow.obj-00af5513f3cdc4af5bc64f5e8c80406b.mesh"]
+
+source_file="res://Red-Eye/DebugArrow.obj"
+dest_files=["res://.godot/imported/DebugArrow.obj-00af5513f3cdc4af5bc64f5e8c80406b.mesh", "res://.godot/imported/DebugArrow.obj-00af5513f3cdc4af5bc64f5e8c80406b.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

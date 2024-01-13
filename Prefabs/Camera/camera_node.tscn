@@ -12,51 +12,57 @@ editor_description = "Should be served as a main point of rotation and zoom scal
 
 [node name="RotateByPivot" type="Node" parent="." node_paths=PackedStringArray("PivotY", "PivotX")]
 script = ExtResource("1_e8ffi")
-PivotY = NodePath("../SubViewportMain/PivotY_And_Move")
-PivotX = NodePath("../SubViewportMain/PivotY_And_Move/PivotX")
+PivotY = NodePath("../ViewportContainerMain/SubViewportMain/PivotY_And_Move")
+PivotX = NodePath("../ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX")
 
 [node name="ZoomBypPos" type="Node" parent="." node_paths=PackedStringArray("CameraNode")]
 script = ExtResource("2_h65gh")
-CameraNode = NodePath("../SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
+CameraNode = NodePath("../ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
 ZoomAmount = 1.0
 
 [node name="MoveByPos" type="Node" parent="." node_paths=PackedStringArray("ReferenceNode", "MoveNode")]
 script = ExtResource("3_8jxr5")
-ReferenceNode = NodePath("../SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
-MoveNode = NodePath("../SubViewportMain/PivotY_And_Move")
+ReferenceNode = NodePath("../ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
+MoveNode = NodePath("../ViewportContainerMain/SubViewportMain/PivotY_And_Move")
 
 [node name="SnapToAxis" type="Node" parent="." node_paths=PackedStringArray("PivotX", "PivotY", "Camera")]
 script = ExtResource("4_cqy78")
-PivotX = NodePath("../SubViewportMain/PivotY_And_Move/PivotX")
-PivotY = NodePath("../SubViewportMain/PivotY_And_Move")
-Camera = NodePath("../SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
+PivotX = NodePath("../ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX")
+PivotY = NodePath("../ViewportContainerMain/SubViewportMain/PivotY_And_Move")
+Camera = NodePath("../ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
 
-[node name="SubViewportMain" type="SubViewport" parent="."]
-transparent_bg = true
-size = Vector2i(1600, 952)
+[node name="ViewportContainerMain" type="SubViewportContainer" parent="."]
+offset_right = 960.0
+offset_bottom = 540.0
 
-[node name="PivotY_And_Move" type="Node3D" parent="SubViewportMain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.00435328)
-
-[node name="PivotX" type="Node3D" parent="SubViewportMain/PivotY_And_Move"]
-
-[node name="Camera3D" type="Camera3D" parent="SubViewportMain/PivotY_And_Move/PivotX"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -5)
-cull_mask = 1048573
-environment = ExtResource("5_mlgbh")
-fov = 85.0
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="SubViewportMain/PivotY_And_Move/PivotX/Camera3D"]
-offset_right = 1600.0
-offset_bottom = 952.0
-
-[node name="SubViewportTools" type="SubViewport" parent="SubViewportMain/PivotY_And_Move/PivotX/Camera3D/SubViewportContainer"]
+[node name="SubViewportMain" type="SubViewport" parent="ViewportContainerMain"]
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1600, 952)
 render_target_update_mode = 4
 
-[node name="CameraTools" type="Camera3D" parent="SubViewportMain/PivotY_And_Move/PivotX/Camera3D/SubViewportContainer/SubViewportTools" node_paths=PackedStringArray("Parent")]
+[node name="PivotY_And_Move" type="Node3D" parent="ViewportContainerMain/SubViewportMain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.00435328)
+
+[node name="PivotX" type="Node3D" parent="ViewportContainerMain/SubViewportMain/PivotY_And_Move"]
+
+[node name="Camera3D" type="Camera3D" parent="ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -5)
+cull_mask = 1048573
+environment = ExtResource("5_mlgbh")
+fov = 85.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D"]
+offset_right = 1600.0
+offset_bottom = 952.0
+
+[node name="SubViewportTools" type="SubViewport" parent="ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1600, 952)
+render_target_update_mode = 4
+
+[node name="CameraTools" type="Camera3D" parent="ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D/SubViewportContainer/SubViewportTools" node_paths=PackedStringArray("Parent")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.56579e-14, 0, -5)
 cull_mask = 2
 fov = 85.0
