@@ -1,22 +1,17 @@
-[gd_scene load_steps=19 format=3 uid="uid://v0kptow445jw"]
+[gd_scene load_steps=15 format=3 uid="uid://v0kptow445jw"]
 
 [ext_resource type="PackedScene" uid="uid://b7vscdvub1chb" path="res://Prefabs/Tools/ToolHolder.tscn" id="1_3fwnl"]
 [ext_resource type="PackedScene" uid="uid://b2nu0mfm41p4c" path="res://Prefabs/Camera/camera_node.tscn" id="1_flgxu"]
 [ext_resource type="PackedScene" uid="uid://bqcyx8p13wa4r" path="res://Prefabs/Grid/grid_manager.tscn" id="3_6v1r8"]
-[ext_resource type="ArrayMesh" uid="uid://c1wsbi7pi866a" path="res://Red-Eye/DebugArrow.obj" id="3_mkivj"]
 [ext_resource type="Theme" uid="uid://c4py5wy3s4yie" path="res://Graphical/Resourses/UIPanelsText.tres" id="4_i3qj3"]
 [ext_resource type="Script" path="res://Scripts/Tools/BoxTool_OLD.gd" id="4_jl38i"]
 [ext_resource type="StyleBox" uid="uid://imuettvsht5u" path="res://Graphical/Resourses/UIPanels.tres" id="4_slkob"]
 [ext_resource type="Environment" uid="uid://cph27x70ws3kb" path="res://Prefabs/Camera/new_environment.tres" id="5_e1646"]
 [ext_resource type="Script" path="res://Scripts/ButtonDebug.gd" id="5_u6wqp"]
 [ext_resource type="Theme" uid="uid://cxwuacxqrpe82" path="res://Graphical/Resourses/ToolsButton.tres" id="7_102ji"]
-[ext_resource type="Shader" path="res://Graphical/Shaders/ViewpoetDisplaytres.gdshader" id="7_aej3f"]
-[ext_resource type="Texture2D" uid="uid://b3s2mcw4sl66h" path="res://Graphical/Shaders/UI/CameraViewPortTexture.tres" id="8_vuxlg"]
 [ext_resource type="Script" path="res://Scripts/FileManager/Loader.gd" id="10_pyvue"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_m78w7"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_2mb54"]
+[sub_resource type="BoxMesh" id="BoxMesh_4d7wu"]
 size = Vector3(2, 5, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb2lb"]
@@ -27,12 +22,9 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0, 0, 0, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hvntj"]
-resource_local_to_scene = true
-shader = ExtResource("7_aej3f")
-shader_parameter/cam_vw = ExtResource("8_vuxlg")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0or6n"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_cbhhv"]
 
 [node name="WorkSpace" type="Node3D"]
 
@@ -40,37 +32,31 @@ shader_parameter/cam_vw = ExtResource("8_vuxlg")
 
 [node name="CameraNode" parent="3D" instance=ExtResource("1_flgxu")]
 
-[node name="ViewportContainerMain" parent="3D/CameraNode" index="4"]
+[node name="ViewportContainerMain" parent="3D/CameraNode/MarginContainer" index="0"]
+mouse_filter = 0
 stretch = true
 
-[node name="SubViewportMain" parent="3D/CameraNode/ViewportContainerMain" index="0"]
-handle_input_locally = true
-size = Vector2i(960, 540)
+[node name="SubViewportMain" parent="3D/CameraNode/MarginContainer/ViewportContainerMain" index="0"]
+size = Vector2i(960, 592)
 
-[node name="SubViewportContainer" parent="3D/CameraNode/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D" index="0"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="SubViewportContainer" parent="3D/CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D" index="0"]
 offset_right = 0.0
 offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
+mouse_filter = 2
+stretch = true
 
-[node name="ToolHolder" parent="3D" instance=ExtResource("1_3fwnl")]
+[node name="SubViewportTools" parent="3D/CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D/SubViewportContainer" index="0"]
+size = Vector2i(960, 592)
 
-[node name="BoxTool" parent="3D/ToolHolder" index="1" node_paths=PackedStringArray("Camera", "ViewPortF", "GridManaged", "DebugPoint", "DebugDirection")]
-Camera = NodePath("../../CameraNode/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
-ViewPortF = NodePath("../../CameraNode/ViewportContainerMain/SubViewportMain")
-GridManaged = NodePath("../../GridManager")
-DebugPoint = NodePath("MeshInstance3D")
-DebugDirection = NodePath("Direction")
+[node name="ToolHolder" parent="3D" node_paths=PackedStringArray("ToolList") instance=ExtResource("1_3fwnl")]
+ToolList = [NodePath("MoveTool"), NodePath("BlockTool")]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="3D/ToolHolder/BoxTool" index="0"]
-transform = Transform3D(0.334315, 0, 0, 0, 0.334315, 0, 0, 0, 0.334315, 0, 0, -2.47966)
-mesh = SubResource("BoxMesh_m78w7")
-
-[node name="Direction" type="MeshInstance3D" parent="3D/ToolHolder/BoxTool" index="1"]
-mesh = ExtResource("3_mkivj")
+[node name="BlockTool" parent="3D/ToolHolder" index="1" node_paths=PackedStringArray("Camera", "ViewPortF", "GridManager", "Cursor", "DebugDirection")]
+Camera = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
+ViewPortF = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain")
+GridManager = NodePath("../../GridManager")
+Cursor = NodePath("Cursor")
+DebugDirection = NodePath("CursorArrow")
 
 [node name="GridManager" parent="3D" instance=ExtResource("3_6v1r8")]
 
@@ -81,7 +67,7 @@ visible = false
 script = ExtResource("4_jl38i")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="3D/MapHolder/Block"]
-mesh = SubResource("BoxMesh_2mb54")
+mesh = SubResource("BoxMesh_4d7wu")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="3D"]
 environment = ExtResource("5_e1646")
@@ -97,9 +83,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ProgrammSpace" type="Control" parent="UI/UI_actual/All of UI"]
-visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 10
@@ -150,17 +136,16 @@ text = "Инструменты"
 script = ExtResource("5_u6wqp")
 
 [node name="WorkSpace" type="Control" parent="UI/UI_actual/All of UI"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 32.0
-offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="ProgrammTools" type="Panel" parent="UI/UI_actual/All of UI/WorkSpace"]
+[node name="MapTools" type="Panel" parent="UI/UI_actual/All of UI/WorkSpace"]
 texture_filter = 1
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
@@ -170,7 +155,7 @@ grow_horizontal = 2
 size_flags_vertical = 0
 theme_override_styles/panel = ExtResource("4_slkob")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UI_actual/All of UI/WorkSpace/ProgrammTools"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UI_actual/All of UI/WorkSpace/MapTools"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -178,17 +163,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="UI/UI_actual/All of UI/WorkSpace/ProgrammTools/HBoxContainer"]
+[node name="PlayButton" type="Button" parent="UI/UI_actual/All of UI/WorkSpace/MapTools/HBoxContainer"]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 theme = ExtResource("7_102ji")
 text = "Играть"
 
-[node name="Button2" type="Button" parent="UI/UI_actual/All of UI/WorkSpace/ProgrammTools/HBoxContainer"]
+[node name="BakeButton" type="Button" parent="UI/UI_actual/All of UI/WorkSpace/MapTools/HBoxContainer"]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 theme = ExtResource("7_102ji")
 text = "запечь свет"
+
+[node name="GridPlusButton" type="Button" parent="UI/UI_actual/All of UI/WorkSpace/MapTools/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme = ExtResource("7_102ji")
+text = "+"
+
+[node name="GridMinusButton" type="Button" parent="UI/UI_actual/All of UI/WorkSpace/MapTools/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme = ExtResource("7_102ji")
+text = "-
+"
+
+[node name="Label" type="Label" parent="UI/UI_actual/All of UI/WorkSpace/MapTools/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "0
+"
 
 [node name="WorkSpaceCont" type="MarginContainer" parent="UI/UI_actual/All of UI/WorkSpace"]
 layout_mode = 1
@@ -196,9 +200,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 32.0
-offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
@@ -238,16 +242,11 @@ custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("7_102ji")
-text = "Объект"
-
-[node name="ViewPortMargin" type="MarginContainer" parent="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont"]
-layout_mode = 2
-theme_override_constants/margin_left = 64
-theme_override_constants/margin_top = 64
-theme_override_constants/margin_right = 256
+text = "сущ."
 
 [node name="UpperPanelMargin" type="MarginContainer" parent="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 64
 
 [node name="UpPanel" type="Panel" parent="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont/UpperPanelMargin"]
@@ -257,8 +256,37 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_styles/panel = ExtResource("4_slkob")
 
+[node name="UpPanContainer" type="MarginContainer" parent="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Shelves" type="HBoxContainer" parent="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="MoveTool" type="Button" parent="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer/Shelves"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme = ExtResource("7_102ji")
+text = "Движ."
+
+[node name="RotateTool" type="Button" parent="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer/Shelves"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme = ExtResource("7_102ji")
+text = "Вращ."
+
 [node name="SettingsMargin" type="MarginContainer" parent="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 64
 theme_override_constants/margin_top = 64
 
@@ -269,15 +297,16 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme_override_styles/panel = ExtResource("4_slkob")
 
-[node name="ViewPortPanel" type="Panel" parent="UI/UI_actual/All of UI"]
+[node name="ViewPortMargin" type="MarginContainer" parent="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 256
+
+[node name="ViewPortPanel" type="Panel" parent="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont/ViewPortMargin"]
 visible = false
-material = SubResource("ShaderMaterial_hvntj")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0or6n")
 
 [node name="Systems" type="Node" parent="."]
@@ -287,11 +316,20 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_0or6n")
 [node name="Loader" type="Node" parent="Systems/FileSystem"]
 script = ExtResource("10_pyvue")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)
+mesh = SubResource("QuadMesh_cbhhv")
+
+[connection signal="gui_input" from="3D/CameraNode/MarginContainer/ViewportContainerMain" to="3D/CameraNode/MarginContainer/ViewportContainerMain" method="_on_gui_input"]
 [connection signal="pressed" from="UI/UI_actual/All of UI/ProgrammSpace/ProgrammProperties/HBoxContainer/File" to="UI/UI_actual/All of UI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"FileBut"]]
 [connection signal="pressed" from="UI/UI_actual/All of UI/ProgrammSpace/ProgrammProperties/HBoxContainer/Editor Properties" to="UI/UI_actual/All of UI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"EditorBut"]]
 [connection signal="pressed" from="UI/UI_actual/All of UI/ProgrammSpace/ProgrammProperties/HBoxContainer/Project Properies" to="UI/UI_actual/All of UI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"ProjectPropBut"]]
 [connection signal="pressed" from="UI/UI_actual/All of UI/ProgrammSpace/ProgrammProperties/HBoxContainer/Tools" to="UI/UI_actual/All of UI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"ToolsBut"]]
+[connection signal="pressed" from="UI/UI_actual/All of UI/WorkSpace/MapTools/HBoxContainer/GridPlusButton" to="3D/GridManager" method="_on_grid_plus_button_pressed"]
+[connection signal="pressed" from="UI/UI_actual/All of UI/WorkSpace/MapTools/HBoxContainer/GridMinusButton" to="3D/GridManager" method="_on_grid_minus_button_pressed"]
 [connection signal="pressed" from="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont/LeftPanel/LeftPanContainer/Shelves/BoxTool" to="3D/ToolHolder" method="_on_box_tool_pressed"]
+[connection signal="pressed" from="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer/Shelves/MoveTool" to="3D/ToolHolder" method="_on_move_tool_pressed"]
+[connection signal="pressed" from="UI/UI_actual/All of UI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer/Shelves/RotateTool" to="3D/ToolHolder" method="_on_move_tool_pressed"]
 
 [editable path="3D/CameraNode"]
 [editable path="3D/ToolHolder"]
