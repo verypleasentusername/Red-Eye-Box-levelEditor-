@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://v0kptow445jw"]
+[gd_scene load_steps=16 format=3 uid="uid://v0kptow445jw"]
 
 [ext_resource type="PackedScene" uid="uid://b7vscdvub1chb" path="res://Prefabs/Tools/ToolHolder.tscn" id="1_3fwnl"]
 [ext_resource type="PackedScene" uid="uid://b2nu0mfm41p4c" path="res://Prefabs/Camera/camera_node.tscn" id="1_flgxu"]
@@ -8,6 +8,7 @@
 [ext_resource type="StyleBox" uid="uid://imuettvsht5u" path="res://Graphical/Resourses/UIPanels.tres" id="4_slkob"]
 [ext_resource type="Environment" uid="uid://cph27x70ws3kb" path="res://Prefabs/Camera/new_environment.tres" id="5_e1646"]
 [ext_resource type="Script" path="res://Scripts/ButtonDebug.gd" id="5_u6wqp"]
+[ext_resource type="Script" path="res://Scripts/Tools/Do-Undo.gd" id="6_lehk5"]
 [ext_resource type="Theme" uid="uid://cxwuacxqrpe82" path="res://Graphical/Resourses/ToolsButton.tres" id="7_102ji"]
 [ext_resource type="Script" path="res://Scripts/FileManager/Loader.gd" id="10_pyvue"]
 
@@ -85,6 +86,7 @@ mesh = SubResource("BoxMesh_h33of")
 environment = ExtResource("5_e1646")
 
 [node name="Do-Undo" type="Node3D" parent="3D"]
+script = ExtResource("6_lehk5")
 
 [node name="UI" type="Node" parent="."]
 
