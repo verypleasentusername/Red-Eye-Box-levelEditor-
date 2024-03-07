@@ -7,8 +7,7 @@ extends MeshInstance3D
 
 # Called when the node enters the scene tree for the first time.
 func setCursorPos(Position):
-	if Snapping:
-		Position = GridGenerate.SnapTo(Position)
+	Position = GridGenerate.QueSnap(Position)
 	global_position = Position
 
 

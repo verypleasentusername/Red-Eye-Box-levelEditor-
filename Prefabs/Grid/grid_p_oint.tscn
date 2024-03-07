@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://btrst6spmnltm"]
+[gd_scene load_steps=4 format=3 uid="uid://btrst6spmnltm"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_145o0"]
+[ext_resource type="Shader" path="res://Graphical/Shaders/Unshaded.gdshader" id="1_vq6vu"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pcon6"]
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_24ltd"]
+render_priority = 0
+shader = ExtResource("1_vq6vu")
+shader_parameter/albedo = Color(0.440066, 0.470705, 0.591466, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5j513"]
+material = SubResource("ShaderMaterial_24ltd")
 
 [node name="GridPOint" type="MeshInstance3D"]
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
-mesh = SubResource("BoxMesh_145o0")
-surface_material_override/0 = SubResource("StandardMaterial3D_pcon6")
+mesh = SubResource("BoxMesh_5j513")
