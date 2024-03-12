@@ -18,10 +18,11 @@ func _on_box_tool_pressed():
 	ToolList[1].visible = true
 	print("Box Tool Selected")
 
-func ToolEvent_1():
-	pass
-
 func DisableAll():
 	for node in ToolList:
 		node.process_mode = Node.PROCESS_MODE_DISABLED
 		node.visible = false
+
+
+func _on_viewport_container_main_gui_input(event):
+	ToolList[current_tool].event_1(event)

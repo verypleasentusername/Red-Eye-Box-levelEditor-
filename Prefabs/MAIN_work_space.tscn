@@ -12,7 +12,7 @@
 [ext_resource type="Theme" uid="uid://cxwuacxqrpe82" path="res://Graphical/Resourses/ToolsButton.tres" id="7_102ji"]
 [ext_resource type="Script" path="res://Scripts/FileManager/Loader.gd" id="10_pyvue"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_h33of"]
+[sub_resource type="BoxMesh" id="BoxMesh_siu2n"]
 size = Vector3(2, 5, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb2lb"]
@@ -57,17 +57,14 @@ stretch = true
 size = Vector2i(960, 592)
 
 [node name="ToolHolder" parent="3D" node_paths=PackedStringArray("ToolList") instance=ExtResource("1_3fwnl")]
-ToolList = [NodePath("MoveTool"), NodePath("BlockTool")]
+ToolList = [NodePath("Block_Tool"), NodePath("Move_Tool")]
 
-[node name="BlockTool" parent="3D/ToolHolder" index="1" node_paths=PackedStringArray("Camera", "ViewPortF", "GridManager", "Cursor", "DebugDirection")]
+[node name="Block_Tool" parent="3D/ToolHolder" index="0" node_paths=PackedStringArray("Camera", "ViewPortF", "GridManager", "Cursor", "DebugDirection")]
 Camera = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
 ViewPortF = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain")
 GridManager = NodePath("../../GridManager")
 Cursor = NodePath("Cursor")
 DebugDirection = NodePath("CursorArrow")
-
-[node name="Cursor" parent="3D/ToolHolder/BlockTool" index="0"]
-Snapping = false
 
 [node name="GridManager" parent="3D" instance=ExtResource("3_6v1r8")]
 GridSnap = true
@@ -80,7 +77,7 @@ visible = false
 script = ExtResource("4_jl38i")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="3D/MapHolder/Block"]
-mesh = SubResource("BoxMesh_h33of")
+mesh = SubResource("BoxMesh_siu2n")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="3D"]
 environment = ExtResource("5_e1646")
@@ -343,7 +340,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_0or6n")
 [node name="Loader" type="Node" parent="Systems/FileSystem"]
 script = ExtResource("10_pyvue")
 
-[connection signal="gui_input" from="3D/CameraNode/MarginContainer/ViewportContainerMain" to="3D/CameraNode/MarginContainer/ViewportContainerMain" method="_on_gui_input"]
+[connection signal="gui_input" from="3D/CameraNode/MarginContainer/ViewportContainerMain" to="3D/ToolHolder" method="_on_viewport_container_main_gui_input"]
 [connection signal="pressed" from="UI/UI_actual/All of UI/ProgrammSpace/ProgrammProperties/HBoxContainer/File" to="UI/UI_actual/All of UI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"FileBut"]]
 [connection signal="pressed" from="UI/UI_actual/All of UI/ProgrammSpace/ProgrammProperties/HBoxContainer/Editor Properties" to="UI/UI_actual/All of UI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"EditorBut"]]
 [connection signal="pressed" from="UI/UI_actual/All of UI/ProgrammSpace/ProgrammProperties/HBoxContainer/Project Properies" to="UI/UI_actual/All of UI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"ProjectPropBut"]]

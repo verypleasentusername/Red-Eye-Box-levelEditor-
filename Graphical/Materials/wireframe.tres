@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ipn1qgfre2ea"]
+
+[ext_resource type="Shader" path="res://Graphical/Shaders/Unshaded.gdshader" id="1_afga8"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_afga8")
+shader_parameter/albedo = Color(1, 1, 1, 1)

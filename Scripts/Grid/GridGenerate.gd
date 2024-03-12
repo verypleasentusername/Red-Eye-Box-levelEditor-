@@ -35,7 +35,6 @@ func GenerateGrid():
 			#var GridIns = GridPoint.instantiate()
 			#GridIns.set_position(Vector3((x*GridInterval),0,(z*GridInterval)))
 			#GridParent.add_child(GridIns)
-			print(CurrentIns)
 	GridLabel.text = str(GridInterval)
 	print("Grid Generation Seccesfull")
 	
