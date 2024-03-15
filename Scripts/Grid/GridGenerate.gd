@@ -8,8 +8,8 @@ var GridY : float = 0
 #placeholder grid point
 var GridPoint = preload("res://Prefabs/Grid/grid_p_oint.tscn")
 
-@onready var GridLabel = $"../../UI/UI_actual/All of UI/WorkSpace/MapTools/HBoxContainer/Label"
-@onready var GridSnapCB = $"../../UI/UI_actual/All of UI/WorkSpace/MapTools/HBoxContainer/CheckBox"
+@onready var GridLabel = $"../../UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer/GridLabel"
+@onready var GridSnapCB = $"../../UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer/CheckBox"
 
 @onready var GridParent = $"./GridHolder"
 @export var GridMesh : MultiMeshInstance3D
@@ -39,7 +39,7 @@ func GenerateGrid():
 	print("Grid Generation Seccesfull")
 	
 	
-func QueSnap(Position):
+func queue_snap(Position):
 	if GridSnap == true:
 		return roundTo(Position,GridInterval)
 	else:

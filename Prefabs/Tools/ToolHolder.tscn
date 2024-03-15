@@ -1,12 +1,15 @@
-[gd_scene load_steps=15 format=3 uid="uid://b7vscdvub1chb"]
+[gd_scene load_steps=18 format=3 uid="uid://b7vscdvub1chb"]
 
 [ext_resource type="Script" path="res://Scripts/Tools/ToolHolder.gd" id="1_absf7"]
 [ext_resource type="ArrayMesh" uid="uid://brp0ruuls2aub" path="res://Prefabs/Tools/ToolHolder.tres" id="2_8frbr"]
 [ext_resource type="Shader" path="res://Graphical/Shaders/Unshaded.gdshader" id="2_84m10"]
 [ext_resource type="Material" uid="uid://c26jd15y377gl" path="res://Graphical/Materials/ToolHolder.tres" id="2_d3lfg"]
 [ext_resource type="Script" path="res://Scripts/Tools/BlockTool.gd" id="4_j1svl"]
+[ext_resource type="Script" path="res://Scripts/Tools/MoveTool/Move_Tool.gd" id="5_g4ego"]
 [ext_resource type="Script" path="res://Scripts/Tools/3DCursor.gd" id="6_g2xgf"]
 [ext_resource type="Script" path="res://Scripts/Tools/Drawer.gd" id="7_7ekr6"]
+[ext_resource type="PackedScene" uid="uid://6h1gxhs83vv0" path="res://Prefabs/Tools/EntityTool/entity_tool.tscn" id="7_j8012"]
+[ext_resource type="Material" uid="uid://ipn1qgfre2ea" path="res://Graphical/Materials/wireframe.tres" id="8_nhxa4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rm35t"]
 render_priority = 0
@@ -81,30 +84,46 @@ layers = 3
 mesh = SubResource("BoxMesh_72dho")
 script = ExtResource("6_g2xgf")
 
+[node name="Label3D" type="Label3D" parent="Block_Tool/Cursor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42857, 0)
+layers = 3
+pixel_size = 0.0045
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "TEXT TEXT TEXT"
+
 [node name="CursorArrow" type="MeshInstance3D" parent="Block_Tool"]
 mesh = SubResource("ArrayMesh_nfdx6")
 
 [node name="Move_Tool" type="Node3D" parent="."]
+script = ExtResource("5_g4ego")
 
-[node name="DirX" type="MeshInstance3D" parent="Move_Tool"]
+[node name="Directions" type="Node3D" parent="Move_Tool"]
+
+[node name="DirX" type="MeshInstance3D" parent="Move_Tool/Directions"]
 layers = 2
 mesh = ExtResource("2_8frbr")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="DirY" type="MeshInstance3D" parent="Move_Tool"]
+[node name="DirY" type="MeshInstance3D" parent="Move_Tool/Directions"]
 transform = Transform3D(1.31134e-07, 0, -1, 1, -4.37114e-08, 1.31134e-07, -4.37114e-08, -1, -5.73206e-15, 0, 0, 0)
+visible = false
 layers = 2
 mesh = SubResource("ArrayMesh_03do8")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="DirZ" type="MeshInstance3D" parent="Move_Tool"]
+[node name="DirZ" type="MeshInstance3D" parent="Move_Tool/Directions"]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 0, 0, 0)
 layers = 2
 mesh = SubResource("ArrayMesh_avkbv")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
+
+[node name="Entity_tool" parent="." instance=ExtResource("7_j8012")]
 
 [node name="Drawer" type="Node3D" parent="."]
 script = ExtResource("7_7ekr6")
+matE = ExtResource("8_nhxa4")
 
 [node name="DrawerInstance3D" type="MeshInstance3D" parent="Drawer"]
 skeleton = NodePath("../..")

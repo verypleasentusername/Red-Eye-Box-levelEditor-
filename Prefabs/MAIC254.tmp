@@ -1,0 +1,381 @@
+[gd_scene load_steps=17 format=3 uid="uid://v0kptow445jw"]
+
+[ext_resource type="PackedScene" uid="uid://b7vscdvub1chb" path="res://Prefabs/Tools/ToolHolder.tscn" id="1_3fwnl"]
+[ext_resource type="PackedScene" uid="uid://b2nu0mfm41p4c" path="res://Prefabs/Camera/camera_node.tscn" id="1_flgxu"]
+[ext_resource type="PackedScene" uid="uid://bqcyx8p13wa4r" path="res://Prefabs/Grid/grid_manager.tscn" id="3_6v1r8"]
+[ext_resource type="Environment" uid="uid://dde0fw20wrr73" path="res://Prefabs/MAIN_ENV.tres" id="4_an2bw"]
+[ext_resource type="Theme" uid="uid://c4py5wy3s4yie" path="res://Graphical/Resourses/UIPanelsText.tres" id="4_i3qj3"]
+[ext_resource type="StyleBox" uid="uid://imuettvsht5u" path="res://Graphical/Resourses/UIPanels.tres" id="4_slkob"]
+[ext_resource type="Shader" path="res://Graphical/Shaders/Unshaded.gdshader" id="4_uxnrf"]
+[ext_resource type="Script" path="res://Scripts/ButtonDebug.gd" id="5_u6wqp"]
+[ext_resource type="Script" path="res://Scripts/Tools/Do-Undo.gd" id="6_lehk5"]
+[ext_resource type="Theme" uid="uid://cxwuacxqrpe82" path="res://Graphical/Resourses/ToolsButton.tres" id="7_102ji"]
+[ext_resource type="Script" path="res://Scripts/FileManager/Loader.gd" id="10_pyvue"]
+[ext_resource type="PackedScene" uid="uid://dsxvp2by4a56m" path="res://Prefabs/UI/pop_up_features.tscn" id="11_sachx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o815f"]
+render_priority = 0
+shader = ExtResource("4_uxnrf")
+shader_parameter/albedo = Color(0.368627, 0.301961, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb2lb"]
+bg_color = Color(0.0431373, 0.0431373, 0.0431373, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q0obc"]
+bg_color = Color(0.235294, 0.235294, 0.235294, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.152941, 0.152941, 0.152941, 1)
+shadow_color = Color(0, 0, 0, 0.811765)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0or6n"]
+
+[node name="WorkSpace" type="Node3D"]
+
+[node name="3D" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="3D"]
+environment = ExtResource("4_an2bw")
+
+[node name="CameraNode" parent="3D" instance=ExtResource("1_flgxu")]
+
+[node name="ViewportContainerMain" parent="3D/CameraNode/MarginContainer" index="0"]
+focus_mode = 0
+mouse_filter = 0
+stretch = true
+
+[node name="SubViewportMain" parent="3D/CameraNode/MarginContainer/ViewportContainerMain" index="0"]
+size = Vector2i(960, 592)
+
+[node name="SubViewportContainer" parent="3D/CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D" index="0"]
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewportTools" parent="3D/CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D/SubViewportContainer" index="0"]
+size = Vector2i(960, 592)
+
+[node name="ToolHolder" parent="3D" node_paths=PackedStringArray("Camera", "Map", "GridManager", "ToolList") instance=ExtResource("1_3fwnl")]
+Camera = NodePath("../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
+Map = NodePath("../MapHolder")
+GridManager = NodePath("../GridManager")
+ToolList = [NodePath("Block_Tool"), NodePath("Move_Tool"), NodePath("Entity_tool")]
+
+[node name="Block_Tool" parent="3D/ToolHolder" index="0" node_paths=PackedStringArray("Map_brushes", "Camera", "ViewPortF", "GridManager", "Cursor", "DebugDirection")]
+Map_brushes = NodePath("../../MapHolder/Brushes")
+Camera = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
+ViewPortF = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain")
+GridManager = NodePath("../../GridManager")
+Cursor = NodePath("Cursor")
+DebugDirection = NodePath("CursorArrow")
+Mat = SubResource("ShaderMaterial_o815f")
+
+[node name="Cursor" parent="3D/ToolHolder/Block_Tool" index="0" node_paths=PackedStringArray("GridGenerate")]
+GridGenerate = NodePath("../../../GridManager")
+
+[node name="Entity_tool" parent="3D/ToolHolder" index="2" node_paths=PackedStringArray("Map", "Camera", "GridManager")]
+Map = NodePath("../../MapHolder")
+Camera = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
+GridManager = NodePath("../../GridManager")
+
+[node name="GridManager" parent="3D" instance=ExtResource("3_6v1r8")]
+GridSnap = true
+
+[node name="MapHolder" type="Node3D" parent="3D"]
+
+[node name="Brushes" type="Node3D" parent="3D/MapHolder"]
+
+[node name="Entities" type="Node3D" parent="3D/MapHolder"]
+
+[node name="Do-Undo" type="Node3D" parent="3D"]
+script = ExtResource("6_lehk5")
+
+[node name="UI" type="Node" parent="."]
+
+[node name="UI_actual" type="CanvasLayer" parent="UI"]
+
+[node name="MainUI" type="Control" parent="UI/UI_actual"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ProgrammSpace" type="Control" parent="UI/UI_actual/MainUI"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+
+[node name="ProgrammProperties" type="Panel" parent="UI/UI_actual/MainUI/ProgrammSpace"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gb2lb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_constants/separation = 16
+
+[node name="File" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("4_i3qj3")
+text = "Файл"
+
+[node name="Editor Properties" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_i3qj3")
+text = "Настройки редактора"
+
+[node name="Project Properies" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_i3qj3")
+text = "Настройки проекта"
+
+[node name="Tools" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_i3qj3")
+text = "Инструменты"
+
+[node name="ButtonDebugger" type="Node" parent="UI/UI_actual/MainUI/ProgrammSpace"]
+script = ExtResource("5_u6wqp")
+
+[node name="WorkSpace" type="Control" parent="UI/UI_actual/MainUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MapTools" type="Panel" parent="UI/UI_actual/MainUI/WorkSpace"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_vertical = 0
+theme_override_styles/panel = ExtResource("4_slkob")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UI_actual/MainUI/WorkSpace/MapTools"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayButton" type="Button" parent="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer"]
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = ExtResource("7_102ji")
+text = "Играть"
+
+[node name="BakeButton" type="Button" parent="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer"]
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("7_102ji")
+text = "запечь свет"
+
+[node name="Space" type="Control" parent="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer"]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+
+[node name="GridPlusButton" type="Button" parent="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("7_102ji")
+text = "+"
+
+[node name="GridMinusButton" type="Button" parent="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("7_102ji")
+text = "-
+"
+
+[node name="GridLabel" type="Label" parent="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "0
+"
+
+[node name="CheckBox" type="CheckBox" parent="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("7_102ji")
+theme_override_styles/normal = SubResource("StyleBoxFlat_q0obc")
+icon_alignment = 1
+
+[node name="WorkSpaceCont" type="MarginContainer" parent="UI/UI_actual/MainUI/WorkSpace"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="LeftPanel" type="Panel" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = ExtResource("4_slkob")
+
+[node name="LeftPanContainer" type="MarginContainer" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/LeftPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Shelves" type="VBoxContainer" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/LeftPanel/LeftPanContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="BoxTool" type="Button" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/LeftPanel/LeftPanContainer/Shelves"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme = ExtResource("7_102ji")
+text = "Куб"
+
+[node name="ObjTool" type="Button" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/LeftPanel/LeftPanContainer/Shelves"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("7_102ji")
+text = "сущ."
+
+[node name="UpperPanelMargin" type="MarginContainer" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 64
+
+[node name="UpPanel" type="Panel" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/UpperPanelMargin"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = ExtResource("4_slkob")
+
+[node name="UpPanContainer" type="MarginContainer" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Shelves" type="HBoxContainer" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="MoveTool" type="Button" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer/Shelves"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme = ExtResource("7_102ji")
+text = "Движ."
+
+[node name="RotateTool" type="Button" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer/Shelves"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme = ExtResource("7_102ji")
+text = "Вращ."
+
+[node name="SettingsMargin" type="MarginContainer" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+
+[node name="InitProperties" type="Panel" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/SettingsMargin"]
+texture_filter = 1
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/panel = ExtResource("4_slkob")
+
+[node name="ViewPortMargin" type="MarginContainer" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 256
+
+[node name="ViewPortPanel" type="Panel" parent="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/ViewPortMargin"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0or6n")
+
+[node name="PopUp_Features" parent="UI/UI_actual" instance=ExtResource("11_sachx")]
+process_mode = 4
+
+[node name="Systems" type="Node" parent="."]
+
+[node name="FileSystem" type="Node" parent="Systems"]
+
+[node name="Loader" type="Node" parent="Systems/FileSystem"]
+script = ExtResource("10_pyvue")
+
+[connection signal="gui_input" from="3D/CameraNode/MarginContainer/ViewportContainerMain" to="3D/ToolHolder" method="_on_viewport_container_main_gui_input"]
+[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/File" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"FileBut"]]
+[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/Editor Properties" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"EditorBut"]]
+[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/Project Properies" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"ProjectPropBut"]]
+[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/Tools" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"ToolsBut"]]
+[connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer/GridPlusButton" to="3D/GridManager" method="_on_grid_plus_button_pressed"]
+[connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer/GridMinusButton" to="3D/GridManager" method="_on_grid_minus_button_pressed"]
+[connection signal="toggled" from="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer/CheckBox" to="3D/GridManager" method="_on_check_box_toggled"]
+[connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/LeftPanel/LeftPanContainer/Shelves/BoxTool" to="3D/ToolHolder" method="_on_box_tool_pressed"]
+[connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/LeftPanel/LeftPanContainer/Shelves/ObjTool" to="3D/ToolHolder" method="_on_obj_tool_pressed"]
+[connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer/Shelves/MoveTool" to="3D/ToolHolder" method="_on_move_tool_pressed"]
+[connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer/Shelves/RotateTool" to="3D/ToolHolder" method="_on_move_tool_pressed"]
+
+[editable path="3D/CameraNode"]
+[editable path="3D/ToolHolder"]
+[editable path="3D/GridManager"]
