@@ -38,15 +38,14 @@ func move(position:Vector3,event):
 	SelectedNode.global_position = (Cpos-Cstart_pos)+start_pos
 
 func get_typed_movement(event, Camera=null):
+	var CameraLocal: Node3D
+	if Camera==null:
+		CameraLocal = TH.Camera
+	else:
+		CameraLocal = Camera
 	if Input.is_action_pressed("Shift"):
-		if Camera==null:
-			return TH.GridManager.queue_snap(CalcCursor.CalcCursorY(TH.Camera,SelectedNode.global_position,event))
-		else:
-			return TH.GridManager.queue_snap(CalcCursor.CalcCursorY(Camera,SelectedNode.global_position,event))
+		return TH.GridManager.queue_snap(CalcCursor.CalcCursorY(CameraLocal,SelectedNode.global_position,event))
 		move_dir=MOVE_DIRS.Y
-	else: 
-		if Camera==null:
-			return TH.GridManager.queue_snap(CalcCursor.CalcCursorXZ(TH.Camera,self,TH.GridManager,event))
-		else:
-			return  TH.GridManager.queue_snap(CalcCursor.CalcCursorXZ(Camera,self,TH.GridManager,event))
+	else:
+		return TH.GridManager.queue_snap(CalcCursor.CalcCursorXZ(CameraLocal,self,start_pos,event))
 		move_dir=MOVE_DIRS.XZ

@@ -52,7 +52,7 @@ mouse_filter = 0
 stretch = true
 
 [node name="SubViewportMain" parent="3D/CameraNode/MarginContainer/ViewportContainerMain" index="0"]
-size = Vector2i(2, 2)
+size = Vector2i(960, 592)
 
 [node name="SubViewportContainer" parent="3D/CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D" index="0"]
 offset_right = 0.0
@@ -61,7 +61,7 @@ mouse_filter = 2
 stretch = true
 
 [node name="SubViewportTools" parent="3D/CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D/SubViewportContainer" index="0"]
-size = Vector2i(2, 2)
+size = Vector2i(960, 592)
 
 [node name="ToolHolder" parent="3D" node_paths=PackedStringArray("Camera", "Map", "GridManager", "ToolList") instance=ExtResource("1_3fwnl")]
 Camera = NodePath("../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
@@ -69,13 +69,13 @@ Map = NodePath("../MapHolder/Brushes")
 GridManager = NodePath("../GridManager")
 ToolList = [NodePath("Block_Tool"), NodePath("Move_Tool"), NodePath("Entity_tool")]
 
-[node name="Block_Tool" parent="3D/ToolHolder" index="0" node_paths=PackedStringArray("Map_brushes", "Camera", "ViewPortF", "GridManager", "Cursor", "DebugDirection")]
+[node name="Block_Tool" parent="3D/ToolHolder" index="0" node_paths=PackedStringArray("Map_brushes", "Camera", "ViewPortF", "TH", "GridManager", "Cursor")]
 Map_brushes = NodePath("../../MapHolder/Brushes")
 Camera = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
 ViewPortF = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain")
+TH = NodePath("..")
 GridManager = NodePath("../../GridManager")
 Cursor = NodePath("Cursor")
-DebugDirection = NodePath("CursorArrow")
 Mat = SubResource("ShaderMaterial_o815f")
 
 [node name="Cursor" parent="3D/ToolHolder/Block_Tool" index="0" node_paths=PackedStringArray("GridGenerate")]
