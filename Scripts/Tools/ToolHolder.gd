@@ -1,7 +1,11 @@
 extends Node3D
 #shared tools info
 @export var Camera:Camera3D
+
 @export var Map:Node3D
+@export var Brushes:Node3D
+@export var Entities:Node3D
+
 @export var GridManager:Node3D
 @export var do_undo:Node3D
 

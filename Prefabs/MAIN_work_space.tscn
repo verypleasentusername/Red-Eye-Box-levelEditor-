@@ -63,18 +63,19 @@ stretch = true
 [node name="SubViewportTools" parent="3D/CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D/SubViewportContainer" index="0"]
 size = Vector2i(960, 592)
 
-[node name="ToolHolder" parent="3D" node_paths=PackedStringArray("Camera", "Map", "GridManager", "ToolList") instance=ExtResource("1_3fwnl")]
+[node name="ToolHolder" parent="3D" node_paths=PackedStringArray("Camera", "Map", "Brushes", "Entities", "GridManager", "do_undo", "ToolList") instance=ExtResource("1_3fwnl")]
 Camera = NodePath("../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
-Map = NodePath("../MapHolder/Brushes")
+Map = NodePath("../MapHolder")
+Brushes = NodePath("../MapHolder/Brushes")
+Entities = NodePath("../MapHolder/Entities")
 GridManager = NodePath("../GridManager")
+do_undo = NodePath("../Do-Undo")
 ToolList = [NodePath("Block_Tool"), NodePath("Move_Tool"), NodePath("Entity_tool")]
 
-[node name="Block_Tool" parent="3D/ToolHolder" index="0" node_paths=PackedStringArray("Map_brushes", "Camera", "ViewPortF", "TH", "GridManager", "Cursor")]
-Map_brushes = NodePath("../../MapHolder/Brushes")
+[node name="Block_Tool" parent="3D/ToolHolder" index="0" node_paths=PackedStringArray("Camera", "ViewPortF", "TH", "Cursor")]
 Camera = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
 ViewPortF = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain")
 TH = NodePath("..")
-GridManager = NodePath("../../GridManager")
 Cursor = NodePath("Cursor")
 Mat = SubResource("ShaderMaterial_o815f")
 

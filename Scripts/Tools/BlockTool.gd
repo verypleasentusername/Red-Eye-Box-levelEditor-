@@ -1,11 +1,9 @@
 extends Tool
 
-@export var Map_brushes : Node3D
 @export var Camera : Camera3D
 @export var ViewPortF : SubViewport
 
 @export var TH : Node3D
-@export var GridManager : Node3D
 
 enum  BLOCK_TYPES {Box,Cillinder,Stairs}
 var BlockType = BLOCK_TYPES.Box
@@ -28,7 +26,7 @@ func update_cursor(event):
 	Drawer.clear_tool_mesh()
 	#make sure that cursor is following right ways
 	if tool_state == TOOL_STATES.BASE1:
-		Cursor.setCursorPos(CalcCursor.CalcCursorXZ(Camera, self,GridManager.global_position,event))
+		Cursor.setCursorPos(CalcCursor.CalcCursorXZ(Camera, self,TH.GridManager.global_position,event))
 	elif tool_state == TOOL_STATES.BASE2:
 		var p01 = block_cursor
 		var p10 = block_p0
@@ -36,7 +34,7 @@ func update_cursor(event):
 		p10.x = block_cursor.x
 		var base_points = [block_p0,p01,block_cursor,p10]
 		Drawer.draw_loop(base_points,true)
-		Cursor.setCursorPos(CalcCursor.CalcCursorXZ(Camera, self,GridManager.global_position,event))
+		Cursor.setCursorPos(CalcCursor.CalcCursorXZ(Camera, self,TH.GridManager.global_position,event))
 	elif tool_state == TOOL_STATES.HIGH:
 		Drawer.draw_cube(block_p0, block_p1, block_cursor)
 		Cursor.setCursorPos(CalcCursor.CalcCursorY(Camera, block_p1, event))
@@ -82,10 +80,12 @@ func build_block():
 		
 		var command:CommandAddBlock = CommandAddBlock.new()
 		
+		var Command_name: String =  GeneralUtil.find_unique_name(TH.Brushes, "block_")
+		print(Command_name)
+		command.command_name = Command_name
 		command.bounds = bounds
-		command.blocks_root_path = Map_brushes
+		command.block_root_path = TH.Brushes.get_path()
+		command.Mat = Mat
 		
-		
-		var shape = Builder.shape_block(block_p0,block_p1,block_p2)
 		TH.do_undo.add_command(command)
 		print("Блок сделан! сука йобаная! готово сука! пошёл нахуй!")
