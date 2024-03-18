@@ -19,14 +19,13 @@ func _do_it():
 	
 	var mesh:ConvexVolume = ConvexVolume.new()
 	mesh.init_block(bounds, uv_transform)
-	print(bounds.position)
+	print(block.position)
 	mesh.translate(-bounds.position)
 	
 	block.Mat = Mat
 	block.block_data = mesh.to_convex_block_data()
 	block_path = block.get_path()
 	block.global_transform = Transform3D(Basis(), bounds.position)
-	block.global_position
 	
 	block.build_from_block()
 	print( command_name + " done")
