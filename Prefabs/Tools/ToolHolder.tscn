@@ -4,7 +4,7 @@
 [ext_resource type="ArrayMesh" uid="uid://brp0ruuls2aub" path="res://Prefabs/Tools/ToolHolder.tres" id="2_8frbr"]
 [ext_resource type="Shader" path="res://Graphical/Shaders/Unshaded.gdshader" id="2_84m10"]
 [ext_resource type="Material" uid="uid://c26jd15y377gl" path="res://Graphical/Materials/ToolHolder.tres" id="2_d3lfg"]
-[ext_resource type="Script" path="res://Scripts/Tools/BlockTool.gd" id="4_j1svl"]
+[ext_resource type="Script" path="res://Scripts/Tools/BlockTool/BlockTool.gd" id="2_u1i2h"]
 [ext_resource type="Script" path="res://Scripts/Tools/MoveTool/Move_Tool.gd" id="5_g4ego"]
 [ext_resource type="Script" path="res://Scripts/Tools/3DCursor.gd" id="6_g2xgf"]
 [ext_resource type="Script" path="res://Scripts/Tools/Drawer.gd" id="7_7ekr6"]
@@ -56,7 +56,7 @@ _surfaces = [{
 script = ExtResource("1_absf7")
 
 [node name="Block_Tool" type="Node3D" parent="." node_paths=PackedStringArray("Drawer")]
-script = ExtResource("4_j1svl")
+script = ExtResource("2_u1i2h")
 Drawer = NodePath("../Drawer")
 
 [node name="Cursor" type="MeshInstance3D" parent="Block_Tool"]

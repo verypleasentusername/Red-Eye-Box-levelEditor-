@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4s6j5rdkr7ew"]
+
+[ext_resource type="Script" path="res://Scripts/Tools/Enity Tool/entity.gd" id="1_f32eh"]
+[ext_resource type="Shader" path="res://Graphical/Shaders/Unshaded.gdshader" id="1_ws0pp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cphi7"]
+render_priority = 0
+shader = ExtResource("1_ws0pp")
+shader_parameter/albedo = Color(0.768627, 0.396078, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fyh34"]
+lightmap_size_hint = Vector2i(9, 13)
+material = SubResource("ShaderMaterial_cphi7")
+add_uv2 = true
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Entity" type="Node3D"]
+script = ExtResource("1_f32eh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_fyh34")

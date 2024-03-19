@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://obug7dba822n"]
+[gd_scene load_steps=5 format=3 uid="uid://obug7dba822n"]
 
 [ext_resource type="Script" path="res://Scripts/Tools/BlockTool/block.gd" id="1_ff5gn"]
+[ext_resource type="Material" uid="uid://c53736658da5p" path="res://Graphical/Materials/unshaded_notexture_texture.tres" id="2_vs8n7"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_sikj8"]
+material = ExtResource("2_vs8n7")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nlahg"]
 
@@ -10,6 +12,7 @@
 script = ExtResource("1_ff5gn")
 
 [node name="Geometry" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00466907, -1.93119e-05, 0.00669146)
 mesh = SubResource("BoxMesh_sikj8")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
@@ -18,3 +21,4 @@ mesh = SubResource("BoxMesh_sikj8")
 shape = SubResource("BoxShape3D_nlahg")
 
 [node name="WireMesh" type="MeshInstance3D" parent="."]
+layers = 513

@@ -4,6 +4,10 @@ extends Node3D
 var CurrentCommand:int = -1
 
 func add_command(command):
+	#if we are adding a new command, we delete every undone command
+	for com in get_children():
+		if com.get_index() > CurrentCommand:
+			com.queue_free()
 	add_child(command)
 	command._do_it()
 	

@@ -1,11 +1,12 @@
 extends Command
 class_name CommandAddBlock
 
+#public
 var block_root_path : NodePath
 var bounds:AABB
 var uv_transform : Transform2D = Transform2D.IDENTITY
 var Mat:Material
-
+#private
 var block_path:NodePath
 #взято с 
 # https://github.com/blackears/cyclopsLevelBuilder/blob/6ff5fce2d77ed65b8bcbe747da2f857fe9eb9a1a/godot/addons/cyclops_level_builder/commands/cmd_add_block.gd
@@ -19,7 +20,6 @@ func _do_it():
 	
 	var mesh:ConvexVolume = ConvexVolume.new()
 	mesh.init_block(bounds, uv_transform)
-	print(block.position)
 	mesh.translate(-bounds.position)
 	
 	block.Mat = Mat

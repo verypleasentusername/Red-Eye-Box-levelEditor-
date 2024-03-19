@@ -8,6 +8,7 @@ var control_mesh:ConvexVolume
 @onready var mesh_wire:MeshInstance3D = $WireMesh
 #default
 var Mat:Material
+var outline_material:Material
 #list of
 var Materials : Array[Material]
 
@@ -25,9 +26,6 @@ var block_data : ConvexBlockData:
 #initiating a block
 
 func build_from_block():
-	mesh_instance = $Geometry
-	mesh_wire = $WireMesh
-	collision_shape = $StaticBody3D/CollisionShape3D
 	#mesh_instance.mesh = null
 	#collision_shape.shape = null
 
@@ -49,12 +47,12 @@ func build_from_block():
 
 	#if Engine.is_editor_hint():
 		#var global_scene = get_node("/root/CyclopsAutoload")
-		#mesh_wire.mesh = vol.create_mesh_wire(global_scene.outline_material)
+	mesh_wire.mesh = vol.create_mesh_wire(outline_material)
 		#print ("added wireframe")
 
-			#print ("added faces")
+		#print ("added faces")
 	#else:
-	#FIXME [Mat] поменять на Materials[]
+	##FIXME [Mat] поменять на Materials[]
 	mesh = vol.create_mesh([Mat], Mat)
 	
 	mesh_instance.mesh = mesh
