@@ -3,7 +3,7 @@ extends RefCounted
 class_name IntersectResults
 
 #FIXME:change for brush type node
-var object:Node3D
+var object:Block
 var face_id:int
 var face_index:int
 var position:Vector3 #local space of block

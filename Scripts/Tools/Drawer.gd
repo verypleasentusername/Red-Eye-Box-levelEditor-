@@ -23,7 +23,7 @@ func draw_cube(p0:Vector3, p1:Vector3, p2:Vector3):
 	p10.x = p1.x
 	p01.x = p0.x
 	draw_loop([p0,p10,p1,p01],true)
-	draw_pillars([p0,p01,p1,p10],p2.y)
+	draw_pillars([p0,p01,p1,p10],p2.y-p1.y)
 	p0.y = p2.y
 	p01.y = p2.y
 	p1.y = p2.y

@@ -26,7 +26,12 @@ func update_cursor(event):
 	Drawer.clear_tool_mesh()
 	#make sure that cursor is following right ways
 	if tool_state == TOOL_STATES.BASE1:
-		Cursor.setCursorPos(CalcCursor.CalcCursorXZ(Camera, self,TH.GridManager.global_position,event))
+		var dir = Camera.project_ray_normal(event.position)
+		var result:IntersectResults = Builder.intersect_ray_closest(Camera.global_position,dir,TH.Map)
+		if result:
+			Cursor.setCursorPos(result.get_world_position())
+		else:
+			Cursor.setCursorPos(CalcCursor.CalcCursorXZ(Camera, self,TH.GridManager.global_position,event))
 	elif tool_state == TOOL_STATES.BASE2:
 		var p01 = block_cursor
 		var p10 = block_p0
@@ -34,7 +39,7 @@ func update_cursor(event):
 		p10.x = block_cursor.x
 		var base_points = [block_p0,p01,block_cursor,p10]
 		Drawer.draw_loop(base_points,true)
-		Cursor.setCursorPos(CalcCursor.CalcCursorXZ(Camera, self,TH.GridManager.global_position,event))
+		Cursor.setCursorPos(CalcCursor.CalcCursorXZ(Camera, self,block_p0,event))
 	elif tool_state == TOOL_STATES.HIGH:
 		Drawer.draw_cube(block_p0, block_p1, block_cursor)
 		Cursor.setCursorPos(CalcCursor.CalcCursorY(Camera, block_p1, event))

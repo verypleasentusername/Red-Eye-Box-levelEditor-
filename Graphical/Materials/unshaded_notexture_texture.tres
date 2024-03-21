@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://c53736658da5p"]
 
 [ext_resource type="Shader" path="res://Graphical/Shaders/unshaded_texture.gdshader" id="1_l6hwy"]
-[ext_resource type="Texture2D" uid="uid://yp5loblujpq5" path="res://Graphical/No_tex.png" id="2_qeu3k"]
+[ext_resource type="Texture2D" uid="uid://cfj6na1vyclym" path="res://Graphical/EBLYA.png" id="2_h00cy"]
 
 [resource]
 render_priority = 0
@@ -17,4 +17,4 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0.5, 0.5, 0.5)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
-shader_parameter/texture_albedo = ExtResource("2_qeu3k")
+shader_parameter/texture_albedo = ExtResource("2_h00cy")

@@ -19,6 +19,7 @@ func _do_it():
 	
 	entity.global_position = entity_pos
 	entity_path = entity.get_path()
+	print(command_name + " done")
 	
 func _undo_it():
 	var entity:Entity = get_node(entity_path)

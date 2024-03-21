@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://v0kptow445jw"]
+[gd_scene load_steps=17 format=3 uid="uid://v0kptow445jw"]
 
 [ext_resource type="PackedScene" uid="uid://b7vscdvub1chb" path="res://Prefabs/Tools/ToolHolder.tscn" id="1_3fwnl"]
 [ext_resource type="PackedScene" uid="uid://b2nu0mfm41p4c" path="res://Prefabs/Camera/camera_node.tscn" id="1_flgxu"]
@@ -8,6 +8,7 @@
 [ext_resource type="Theme" uid="uid://c4py5wy3s4yie" path="res://Graphical/Resourses/UIPanelsText.tres" id="4_i3qj3"]
 [ext_resource type="StyleBox" uid="uid://imuettvsht5u" path="res://Graphical/Resourses/UIPanels.tres" id="4_slkob"]
 [ext_resource type="Script" path="res://Scripts/ButtonDebug.gd" id="5_u6wqp"]
+[ext_resource type="Script" path="res://Scripts/MapHolder.gd" id="6_ibqir"]
 [ext_resource type="Script" path="res://Scripts/Tools/Do-Undo.gd" id="6_lehk5"]
 [ext_resource type="Theme" uid="uid://cxwuacxqrpe82" path="res://Graphical/Resourses/ToolsButton.tres" id="7_102ji"]
 [ext_resource type="Script" path="res://Scripts/FileManager/Loader.gd" id="10_pyvue"]
@@ -40,6 +41,9 @@ shadow_color = Color(0, 0, 0, 0.811765)
 environment = ExtResource("4_an2bw")
 
 [node name="CameraNode" parent="3D" instance=ExtResource("1_flgxu")]
+
+[node name="MoveByPos" parent="3D/CameraNode" index="2"]
+sens = 0.002
 
 [node name="ViewportContainerMain" parent="3D/CameraNode/MarginContainer" index="0"]
 focus_mode = 0
@@ -87,6 +91,7 @@ TH = NodePath("..")
 GridSnap = true
 
 [node name="MapHolder" type="Node3D" parent="3D"]
+script = ExtResource("6_ibqir")
 
 [node name="Brushes" type="Node3D" parent="3D/MapHolder"]
 

@@ -68,3 +68,16 @@ func build_from_block():
 		#occluder_object.indices = vol.get_trimesh_indices()
 		#occluder.occluder = occluder_object
 	
+func intersect_ray_closest(origin:Vector3, dir:Vector3)->IntersectResults:
+	if !block_data:
+		return null
+	
+	var xform:Transform3D = global_transform.affine_inverse()
+	var origin_local:Vector3 = xform * origin
+	var dir_local:Vector3 = xform.basis * dir
+	
+	var result:IntersectResults = control_mesh.intersect_ray_closest(origin_local, dir_local)
+	if result:
+		result.object = self
+		
+	return result

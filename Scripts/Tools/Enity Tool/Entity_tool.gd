@@ -11,7 +11,13 @@ func event_1(event):
 		var command:CommandAddEntity = CommandAddEntity.new()
 		
 		command.entity_root_path = TH.Entities.get_path()
-		command.entity_pos = TH.GridManager.queue_snap(CalcCursor.CalcCursorXZ(TH.Camera, self, TH.GridManager.global_position,event))
+		var dir = TH. Camera.project_ray_normal(event.position)
+		var result:IntersectResults = Builder.intersect_ray_closest(TH.Camera.global_position,dir,TH.Map)
+		if result:
+			command.entity_pos = TH.GridManager.queue_snap(result.get_world_position()+result.get_world_normal()/4)
+		else:
+			command.entity_pos = TH.GridManager.queue_snap(CalcCursor.CalcCursorXZ(TH.Camera, self, TH.GridManager.global_position,event))
+			command.entity_pos.y += 0.25
 		command.command_name = GeneralUtil.find_unique_name(TH.Entities,"entity_")
 		command.entity_name = entity_name
 		

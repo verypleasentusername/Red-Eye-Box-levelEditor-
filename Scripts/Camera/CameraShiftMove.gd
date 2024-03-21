@@ -18,8 +18,8 @@ func _input(event):
 		dirM.y = event.relative.y
 		#FIXME: implement
 
-		MoveNode.transform.origin -= ReferenceNode.global_transform.basis.x * dirM.x * sens
-		MoveNode.transform.origin -= ReferenceNode.global_transform.basis.y * -dirM.y * sens
+		MoveNode.transform.origin -= ReferenceNode.global_transform.basis.x * dirM.x * (sens * -ReferenceNode.transform.origin.z)
+		MoveNode.transform.origin -= ReferenceNode.global_transform.basis.y * -dirM.y * (sens * -ReferenceNode.transform.origin.z)
 		
 		#MoveNode.transform.origin -= ReferenceNode.basis.x * sens
 		#print(ReferenceNode.global_transform.basis)
