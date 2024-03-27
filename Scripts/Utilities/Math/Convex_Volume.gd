@@ -8,7 +8,7 @@ class VertexInfo extends RefCounted:
 	var point:Vector3
 	var normal:Vector3
 	var edge_indices:Array[int] = []
-	var selected:bool
+	var CurSelected:bool
 	
 	func _init(mesh:ConvexVolume, point:Vector3 = Vector3.ZERO):
 		self.mesh = mesh
@@ -27,7 +27,7 @@ class EdgeInfo extends RefCounted:
 	var start_index:int
 	var end_index:int
 	var face_indices:Array[int] = []
-	var selected:bool
+	var CurSelected:bool
 	
 	func _init(mesh:ConvexVolume, start:int = 0, end:int = 0):
 		self.mesh = mesh
@@ -55,18 +55,18 @@ class FaceInfo extends RefCounted:
 	var uv_transform:Transform2D
 	var color:Color
 	var visible:bool
-	var selected:bool
+	var CurSelected:bool
 	var vertex_indices:Array[int]
 	var triangulation_indices:Array[int]
 	var lightmap_uvs:PackedVector2Array
 	
-	func _init(mesh:ConvexVolume, id:int, normal:Vector3, uv_transform:Transform2D = Transform2D.IDENTITY, material_id:int = 0, visible:bool = true, color:Color = Color.WHITE, selected:bool = false):
+	func _init(mesh:ConvexVolume, id:int, normal:Vector3, uv_transform:Transform2D = Transform2D.IDENTITY, material_id:int = 0, visible:bool = true, color:Color = Color.WHITE, CurSelected:bool = false):
 		self.mesh = mesh
 		self.id = id
 		self.normal = normal
 		self.material_id = material_id
 		self.uv_transform = uv_transform
-		self.selected = selected
+		self.CurSelected = CurSelected
 		self.visible = visible
 		self.color = color
 	
@@ -212,7 +212,7 @@ func init_from_convex_block_data(data:ConvexBlockData):
 	for i in data.vertex_points.size():
 		var v:VertexInfo = VertexInfo.new(self, data.vertex_points[i])
 		vertices.append(v)
-		v.selected = data.vertex_selected[i]
+		v.CurSelected = data.vertex_CurSelected[i]
 
 	var num_edges:int = data.edge_vertex_indices.size() / 2
 	for i in num_edges:
@@ -220,7 +220,7 @@ func init_from_convex_block_data(data:ConvexBlockData):
 		edges.append(edge)
 		edge.face_indices.append(data.edge_face_indices[i * 2])
 		edge.face_indices.append(data.edge_face_indices[i * 2 + 1])
-		edge.selected = data.edge_selected[i]
+		edge.CurSelected = data.edge_CurSelected[i]
 		#edge.active = data.edge_active[i]
 		
 	var face_vertex_count:int = 0
@@ -243,7 +243,7 @@ func init_from_convex_block_data(data:ConvexBlockData):
 		var face_visible:int = data.face_visible[face_idx]
 		var face_color:Color = data.face_color[face_idx]
 		var f:FaceInfo = FaceInfo.new(self, face_id, normal, face_uv_transform, face_mat_index, face_visible, face_color)
-		f.selected = data.face_selected[face_idx]
+		f.CurSelected = data.face_CurSelected[face_idx]
 		#f.active = data.face_active[face_idx]
 		f.vertex_indices = vert_indices
 		
@@ -344,18 +344,18 @@ func get_face_coincident_with_plane(plane:Plane)->FaceInfo:
 	return null
 
 
-func get_face_ids(selected_only:bool = false)->PackedInt32Array:
+func get_face_ids(CurSelected_only:bool = false)->PackedInt32Array:
 	var result:PackedInt32Array
 	for f in faces:
-		if !selected_only || f.selected:
+		if !CurSelected_only || f.CurSelected:
 			result.append(f.id)
 	return result
 
-func get_face_indices(selected_only:bool = false)->PackedInt32Array:
+func get_face_indices(CurSelected_only:bool = false)->PackedInt32Array:
 	var result:PackedInt32Array
 	for f_idx in faces.size():
 		var f:FaceInfo = faces[f_idx]
-		if !selected_only || f.selected:
+		if !CurSelected_only || f.CurSelected:
 			result.append(f_idx)
 	return result
 
@@ -389,7 +389,7 @@ func copy_face_attributes(ref_vol:ConvexVolume):
 		fl.uv_transform = ref_face.uv_transform
 		fl.visible = ref_face.visible
 		fl.color = ref_face.color
-		fl.selected = ref_face.selected
+		fl.CurSelected = ref_face.CurSelected
 
 func to_convex_block_data()->ConvexBlockData:
 	var result:ConvexBlockData = ConvexBlockData.new()
@@ -400,13 +400,13 @@ func to_convex_block_data()->ConvexBlockData:
 	
 	for v in vertices:
 		result.vertex_points.append(v.point)
-		result.vertex_selected.append(v.selected)
+		result.vertex_CurSelected.append(v.CurSelected)
 		#result.vertex_active.append(v.active)
 
 	for e in edges:
 		result.edge_vertex_indices.append_array([e.start_index, e.end_index])
 		result.edge_face_indices.append_array([e.face_indices[0], e.face_indices[1]])
-		result.edge_selected.append(e.selected)
+		result.edge_CurSelected.append(e.CurSelected)
 		#result.edge_active.append(e.active)
 
 	for face in faces:
@@ -414,7 +414,7 @@ func to_convex_block_data()->ConvexBlockData:
 		result.face_vertex_count.append(num_verts)
 		result.face_vertex_indices.append_array(face.vertex_indices)
 		result.face_ids.append(face.id)
-		result.face_selected.append(face.selected)
+		result.face_CurSelected.append(face.CurSelected)
 		#result.face_active.append(face.active)
 		result.face_material_indices.append(face.material_id)
 		result.face_uv_transform.append(face.uv_transform)
@@ -1007,15 +1007,15 @@ func format_faces_string()->String:
 			
 func update_edge_and_face_selection_from_vertices():
 	for e in edges:
-		e.selected = vertices[e.start_index].selected && vertices[e.end_index].selected
+		e.CurSelected = vertices[e.start_index].CurSelected && vertices[e.end_index].CurSelected
 
 	for f in faces:
 		var all_sel:bool = true
 		for v_idx in f.vertex_indices:
-			if !vertices[v_idx].selected:
+			if !vertices[v_idx].CurSelected:
 				all_sel = false
 				break
-		f.selected = all_sel
+		f.CurSelected = all_sel
 
 
 func intersects_plane(plane:Plane)->bool:

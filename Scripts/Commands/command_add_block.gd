@@ -6,6 +6,8 @@ var block_root_path : NodePath
 var bounds:AABB
 var uv_transform : Transform2D = Transform2D.IDENTITY
 var Mat:Material
+var CurSelected_mat:Material
+var unCurSelected_mat:Material
 #private
 var block_path:NodePath
 #взято с 
@@ -24,6 +26,8 @@ func _do_it():
 	name = command_name
 	
 	block.Mat = Mat
+	block.CurSelected_mat = CurSelected_mat
+	block.unCurSelected_mat = unCurSelected_mat
 	block.block_data = mesh.to_convex_block_data()
 	block_path = block.get_path()
 	block.global_transform = Transform3D(Basis(), bounds.position)

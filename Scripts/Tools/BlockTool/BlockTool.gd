@@ -10,7 +10,11 @@ var BlockType = BLOCK_TYPES.Box
 
 @export var Cursor : Node3D
 @export var Drawer: Node3D
-# база 2 потому что первая задаётся на ready
+# 
+@export var sel_mat: Material
+@export var unsel_mat :Material
+
+
 enum TOOL_STATES {BASE1,BASE2,HIGH}
 var tool_state = TOOL_STATES.BASE1
 var block_cursor:Vector3
@@ -84,12 +88,11 @@ func build_block():
 	if bounds.has_volume():
 		
 		var command:CommandAddBlock = CommandAddBlock.new()
-		
-		var Command_name: String =  GeneralUtil.find_unique_name(TH.Brushes, "block_")
-		command.command_name = Command_name
+		command.CurSelected_mat = sel_mat
+		command.unCurSelected_mat = unsel_mat
 		command.bounds = bounds
 		command.block_root_path = TH.Brushes.get_path()
 		command.Mat = Mat
 		
-		TH.do_undo.add_command(command)
+		TH.do_undo.add_command(command, "block_")
 

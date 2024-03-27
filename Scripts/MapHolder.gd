@@ -1,43 +1,45 @@
 extends Node3D
 class_name MapHolder
 
-var SelectedNodes:Array [Node3D]
-var StartSelected:Array [Node3D]
-
+#FIXME пиздец а не решение
+# должно быть типа Node3D но поскольку блоки удаляются, то запоминать их легче как нод паф
+@export var DoUndo:Node3D
 #private
 var start_pos:Array [Vector3]
 
 func get_select_position():
 	if if_select_exists():
-		return SelectedNodes[0].position
+		return get_node(DoUndo.get_cur_selected()[0]).position
 	else:
 		return Vector3.ZERO
 
-func get_selected_start_position():
+func get_cur_selected_start_position():
 	return start_pos
 
-func get_selected_position():
+func get_cur_selected_position():
 	var pos:Array[Vector3] 
-	for i in range(SelectedNodes.size()):
-		pos.append(SelectedNodes[i].global_position)
+	for i in range(DoUndo.get_cur_selected().size()):
+		pos.append(get_node(DoUndo.get_cur_selected()).global_position)
 	return pos
 
 func set_start_pos():
-	update_start_pos()
-	for i in range(SelectedNodes.size()):
-		start_pos[i] = SelectedNodes[i].global_position
-func update_start_pos():
-	start_pos.resize(SelectedNodes.size())
+	update_current_mov()
+	for i in range(DoUndo.get_cur_selected().size()):
+		start_pos[i] = get_node(DoUndo.get_cur_selected()[i]).global_position
+func update_current_mov():
+	start_pos.resize(DoUndo.get_cur_selected().size())
 
-func move_selected(move:Vector3):
-	StartSelected.clear()
-	for i in range(SelectedNodes.size()):
-		SelectedNodes[i].position = move + start_pos[i]
-		StartSelected.append(SelectedNodes[i])
+
+func move_cur_selected(pos:Vector3):
+	var CurSelected = DoUndo.get_cur_selected()
+	for i in range(CurSelected.size()):
+		get_node(CurSelected[i]).global_position = pos+start_pos[i]
 
 func if_select_exists():
-	if SelectedNodes.size() > 0:
-		return true
+	var CurSelected = DoUndo.get_cur_selected()
+	if CurSelected.size() > 0:
+		for i in range(CurSelected.size()):
+			if get_node(CurSelected[i]) != null:
+				return true
 	else:
 		return false
-

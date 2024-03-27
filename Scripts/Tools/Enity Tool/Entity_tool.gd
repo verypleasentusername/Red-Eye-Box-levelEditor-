@@ -18,7 +18,6 @@ func event_1(event):
 		else:
 			command.entity_pos = TH.GridManager.queue_snap(CalcCursor.CalcCursorXZ(TH.Camera, self, TH.GridManager.global_position,event))
 			command.entity_pos.y += 0.25
-		command.command_name = GeneralUtil.find_unique_name(TH.Entities,"entity_")
 		command.entity_name = entity_name
 		
-		TH.do_undo.add_command(command)
+		TH.do_undo.add_command(command,"entity_")

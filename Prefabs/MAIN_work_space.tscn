@@ -1,18 +1,25 @@
-[gd_scene load_steps=17 format=3 uid="uid://v0kptow445jw"]
+[gd_scene load_steps=20 format=3 uid="uid://v0kptow445jw"]
 
 [ext_resource type="PackedScene" uid="uid://b7vscdvub1chb" path="res://Prefabs/Tools/ToolHolder.tscn" id="1_3fwnl"]
 [ext_resource type="PackedScene" uid="uid://b2nu0mfm41p4c" path="res://Prefabs/Camera/camera_node.tscn" id="1_flgxu"]
 [ext_resource type="PackedScene" uid="uid://bqcyx8p13wa4r" path="res://Prefabs/Grid/grid_manager.tscn" id="3_6v1r8"]
+[ext_resource type="Material" uid="uid://j0t0srved5g2" path="res://Graphical/Materials/selected.tres" id="4_8r6uh"]
 [ext_resource type="Environment" uid="uid://dde0fw20wrr73" path="res://Prefabs/MAIN_ENV.tres" id="4_an2bw"]
 [ext_resource type="Material" uid="uid://c53736658da5p" path="res://Graphical/Materials/unshaded_notexture_texture.tres" id="4_cwbgc"]
 [ext_resource type="Theme" uid="uid://c4py5wy3s4yie" path="res://Graphical/Resourses/UIPanelsText.tres" id="4_i3qj3"]
 [ext_resource type="StyleBox" uid="uid://imuettvsht5u" path="res://Graphical/Resourses/UIPanels.tres" id="4_slkob"]
+[ext_resource type="Shader" path="res://Graphical/Shaders/Unshaded.gdshader" id="5_d2rle"]
 [ext_resource type="Script" path="res://Scripts/ButtonDebug.gd" id="5_u6wqp"]
 [ext_resource type="Script" path="res://Scripts/MapHolder.gd" id="6_ibqir"]
 [ext_resource type="Script" path="res://Scripts/Tools/Do-Undo.gd" id="6_lehk5"]
 [ext_resource type="Theme" uid="uid://cxwuacxqrpe82" path="res://Graphical/Resourses/ToolsButton.tres" id="7_102ji"]
 [ext_resource type="Script" path="res://Scripts/FileManager/Loader.gd" id="10_pyvue"]
 [ext_resource type="PackedScene" uid="uid://dsxvp2by4a56m" path="res://Prefabs/UI/pop_up_features.tscn" id="11_sachx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8bisw"]
+render_priority = 0
+shader = ExtResource("5_d2rle")
+shader_parameter/albedo = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb2lb"]
 bg_color = Color(0.0431373, 0.0431373, 0.0431373, 1)
@@ -33,7 +40,7 @@ shadow_color = Color(0, 0, 0, 0.811765)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0or6n"]
 
-[node name="WorkSpace" type="Node3D"]
+[node name="WorkSpace" type="Node3D" groups=["selected_nodes"]]
 
 [node name="3D" type="Node" parent="."]
 
@@ -76,6 +83,8 @@ Camera = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubVie
 ViewPortF = NodePath("../../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain")
 TH = NodePath("..")
 Cursor = NodePath("Cursor")
+sel_mat = ExtResource("4_8r6uh")
+unsel_mat = SubResource("ShaderMaterial_8bisw")
 Mat = ExtResource("4_cwbgc")
 
 [node name="Cursor" parent="3D/ToolHolder/Block_Tool" index="0" node_paths=PackedStringArray("GridGenerate")]
@@ -88,10 +97,12 @@ TH = NodePath("..")
 TH = NodePath("..")
 
 [node name="GridManager" parent="3D" instance=ExtResource("3_6v1r8")]
+GridInterval = 1.0
 GridSnap = true
 
-[node name="MapHolder" type="Node3D" parent="3D"]
+[node name="MapHolder" type="Node3D" parent="3D" node_paths=PackedStringArray("DoUndo")]
 script = ExtResource("6_ibqir")
+DoUndo = NodePath("../Do-Undo")
 
 [node name="Brushes" type="Node3D" parent="3D/MapHolder"]
 

@@ -21,7 +21,7 @@ func _on_box_tool_pressed():
 	ToolList[0]._activate()
 	ToolList[0].process_mode = Node.PROCESS_MODE_INHERIT
 	ToolList[0].visible = true
-	print("Box Tool Selected")
+	print("Box Tool CurSelected")
 
 func _on_move_tool_pressed():
 	current_tool = 1
@@ -29,7 +29,7 @@ func _on_move_tool_pressed():
 	ToolList[1]._activate()
 	ToolList[1].process_mode = Node.PROCESS_MODE_INHERIT
 	ToolList[1].visible = true
-	print("Move Tool Selected")
+	print("Move Tool CurSelected")
 	
 func _on_obj_tool_pressed():
 	current_tool = 2
@@ -37,7 +37,7 @@ func _on_obj_tool_pressed():
 	ToolList[2]._activate()
 	ToolList[2].process_mode = Node.PROCESS_MODE_INHERIT
 	ToolList[2].visible = true
-	print("Obj Tool Selected")
+	print("Obj Tool CurSelected")
 
 func DisableAll():
 	for node in ToolList:

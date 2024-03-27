@@ -9,6 +9,9 @@ var control_mesh:ConvexVolume
 #default
 var Mat:Material
 var outline_material:Material
+
+var CurSelected_mat: Material
+var unCurSelected_mat: Material
 #list of
 var Materials : Array[Material]
 
@@ -47,6 +50,7 @@ func build_from_block():
 
 	#if Engine.is_editor_hint():
 		#var global_scene = get_node("/root/CyclopsAutoload")
+	upd_wire(false)
 	mesh_wire.mesh = vol.create_mesh_wire(outline_material)
 		#print ("added wireframe")
 
@@ -67,6 +71,14 @@ func build_from_block():
 		#occluder_object.vertices = vol.get_points()
 		#occluder_object.indices = vol.get_trimesh_indices()
 		#occluder.occluder = occluder_object
+func upd_wire(CurSelected:bool):
+	var vol:ConvexVolume = ConvexVolume.new()
+	vol.init_from_convex_block_data(block_data)
+	if CurSelected:
+		outline_material = CurSelected_mat
+	else:
+		outline_material = unCurSelected_mat
+	mesh_wire.mesh = vol.create_mesh_wire(outline_material)
 	
 func intersect_ray_closest(origin:Vector3, dir:Vector3)->IntersectResults:
 	if !block_data:
