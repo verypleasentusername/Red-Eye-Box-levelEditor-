@@ -3,13 +3,13 @@ extends Node3D
 #начинается с нуля, но так как 0 это 1 то настоящий 0 будет -1
 var CurrentCommand:int = -1
 
-func add_command(command,name:String = ""):
+func add_command(command,ComName:String = ""):
 	#if we are adding a new command, we delete every next command
 	for com in get_children():
 		if com.get_index() > CurrentCommand:
 			com.queue_free()
 	add_child(command)
-	command.command_name = name+str(CurrentCommand+1)
+	command.command_name = ComName+str(CurrentCommand+1)
 	command._do_it()
 	
 	CurrentCommand+=1
@@ -28,7 +28,7 @@ func undo_command():
 	
 		CurrentCommand-=1
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("_Undo"):
 		undo_command()
 	if Input.is_action_just_pressed("_Do"):

@@ -10,6 +10,7 @@ material = ExtResource("2_vs8n7")
 
 [node name="Block" type="Node3D"]
 script = ExtResource("1_ff5gn")
+metadata/type = "Block"
 
 [node name="Geometry" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00466907, -1.93119e-05, 0.00669146)

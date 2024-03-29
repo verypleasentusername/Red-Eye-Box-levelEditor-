@@ -1,3 +1,3 @@
-extends Node3D
+extends MapObject
 class_name Entity
 

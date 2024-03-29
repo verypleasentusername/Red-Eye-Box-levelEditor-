@@ -7,7 +7,7 @@ var cur_sel:Node3D
 var addition:= true
 #private
 var CurSelected:Array [NodePath]
-const BlockClass = preload("res://Scripts/Tools/BlockTool/block.gd")
+const BlockClass = preload("res://Scripts/Tools/BlockTool/block.gd") #FIXME proper 
 
 func _ready():
 	CurSelected.assign(DoUndo.get_cur_selected())

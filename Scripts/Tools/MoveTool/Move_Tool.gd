@@ -42,7 +42,7 @@ func event_1(event):
 		#if we dragged somewhere before release, commit MOVE command
 		elif TH.Map.if_select_exists():
 			var command:CommandMove = CommandMove.new()
-			command.start_pos = TH.Map.get_cur_selected_start_position()
+			command.start_pos.assign(TH.Map.get_cur_selected_start_position())
 			command.ObjToMove.assign(TH.do_undo.get_cur_selected())
 			command.move = Cpos-Cstart_pos
 			TH.do_undo.add_command(command,"move_")
@@ -58,11 +58,11 @@ func event_1(event):
 			Cstart_pos = get_typed_movement(start_event, start_camera)
 			Cpos = get_typed_movement(event, TH.Camera)
 			if  TH.Map.if_select_exists():
-				move(position,event)
+				move()
 				$Directions.global_position = TH.Map.get_select_position()
 
 
-func move(position:Vector3,event):
+func move():
 	TH.Map.move_cur_selected(Cpos-Cstart_pos)
 
 func get_typed_movement(event, Camera):

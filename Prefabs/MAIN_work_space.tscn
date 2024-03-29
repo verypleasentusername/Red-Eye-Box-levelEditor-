@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://v0kptow445jw"]
+[gd_scene load_steps=21 format=3 uid="uid://v0kptow445jw"]
 
 [ext_resource type="PackedScene" uid="uid://b7vscdvub1chb" path="res://Prefabs/Tools/ToolHolder.tscn" id="1_3fwnl"]
 [ext_resource type="PackedScene" uid="uid://b2nu0mfm41p4c" path="res://Prefabs/Camera/camera_node.tscn" id="1_flgxu"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://Scripts/MapHolder.gd" id="6_ibqir"]
 [ext_resource type="Script" path="res://Scripts/Tools/Do-Undo.gd" id="6_lehk5"]
 [ext_resource type="Theme" uid="uid://cxwuacxqrpe82" path="res://Graphical/Resourses/ToolsButton.tres" id="7_102ji"]
+[ext_resource type="Script" path="res://Scripts/Interface/ProgrammSpace.gd" id="10_2lt7l"]
 [ext_resource type="Script" path="res://Scripts/FileManager/Loader.gd" id="10_pyvue"]
 [ext_resource type="PackedScene" uid="uid://dsxvp2by4a56m" path="res://Prefabs/UI/pop_up_features.tscn" id="11_sachx"]
 
@@ -131,6 +132,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 32.0
 grow_horizontal = 2
+script = ExtResource("10_2lt7l")
 
 [node name="ProgrammProperties" type="Panel" parent="UI/UI_actual/MainUI/ProgrammSpace"]
 texture_filter = 1

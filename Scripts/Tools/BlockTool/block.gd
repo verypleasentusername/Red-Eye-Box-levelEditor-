@@ -1,4 +1,4 @@
-extends Node3D
+extends MapObject
 class_name Block
 
 var blocks_root_path:NodePath

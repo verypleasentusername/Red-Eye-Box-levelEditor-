@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b87gha1e2e3fk"]
+
+[ext_resource type="Theme" uid="uid://cxwuacxqrpe82" path="res://Graphical/Resourses/ToolsButton.tres" id="1_njehn"]
+
+[node name="MenuButton" type="Button"]
+theme = ExtResource("1_njehn")
+text = " Добавить...     + "

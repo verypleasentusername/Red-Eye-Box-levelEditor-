@@ -16,6 +16,7 @@ size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Entity" type="Node3D"]
 script = ExtResource("1_f32eh")
+metadata/Type = "Entity"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_fyh34")
