@@ -31,10 +31,11 @@ func event_1(event):
 			var command_sel:CommandSelect = CommandSelect.new()
 			if result:
 				command_sel.cur_sel = result.object
-				$Directions.global_position = TH.Map.get_select_position()#FIXME Change to proper Directions movement func
 			if !Input.is_action_pressed("Shift"):
 				command_sel.addition = false
-				
+				if !result and TH.do_undo.get_cur_selected().size() == 0:# .empty() не работает? чзх
+					return
+			#commiting command
 			command_sel.add_to_group("CurSelected_nodes")
 			command_sel.DoUndo = TH.do_undo
 			TH.do_undo.add_command(command_sel,"select_")
@@ -46,7 +47,7 @@ func event_1(event):
 			command.ObjToMove.assign(TH.do_undo.get_cur_selected())
 			command.move = Cpos-Cstart_pos
 			TH.do_undo.add_command(command,"move_")
-			
+		$Directions.upd_mov(TH.Map.get_select_position())
 	#click start is a prep for click HOLD
 	if Input.is_action_just_pressed("Click"):
 		start_camera = TH.Camera
@@ -57,9 +58,9 @@ func event_1(event):
 	if Input.is_action_pressed("Click"):
 			Cstart_pos = get_typed_movement(start_event, start_camera)
 			Cpos = get_typed_movement(event, TH.Camera)
+			$Directions.upd_mov(TH.Map.get_select_position())
 			if  TH.Map.if_select_exists():
 				move()
-				$Directions.global_position = TH.Map.get_select_position()
 
 
 func move():
@@ -68,14 +69,10 @@ func move():
 func get_typed_movement(event, Camera):
 	if Input.is_action_pressed("Shift"):
 		move_dir=MOVE_DIRS.Y
-		$Directions/DirY.visible = true
-		$Directions/DirX.visible = false
-		$Directions/DirZ.visible = false
+		$Directions.mov_Y()
 		return TH.GridManager.queue_snap(CalcCursor.CalcCursorY(Camera, TH.Map.get_select_position(), event))
 	else:
 		move_dir=MOVE_DIRS.XZ
-		$Directions/DirY.visible = false
-		$Directions/DirX.visible = true
-		$Directions/DirZ.visible = true
+		$Directions.mov_XZ()
 		return TH.GridManager.queue_snap(CalcCursor.CalcCursorXZ(Camera,self,TH.Map.get_select_position(), event))
 

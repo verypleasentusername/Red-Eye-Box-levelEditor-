@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsxvp2by4a56m"]
 
 [ext_resource type="StyleBox" uid="uid://bmcubbmaps45l" path="res://Graphical/Resourses/UI_flat_panel.tres" id="1_8bg5a"]
-[ext_resource type="Script" path="res://Scripts/Interface/pop_up_features.gd" id="1_xqyab"]
+[ext_resource type="Script" path="res://Scripts/Interface/OptionsList.gd" id="1_br4to"]
 
 [node name="PopUp_Features" type="Control" node_paths=PackedStringArray("ButtonParent")]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_xqyab")
+script = ExtResource("1_br4to")
 ButtonParent = NodePath("PanelContainer/VBoxContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

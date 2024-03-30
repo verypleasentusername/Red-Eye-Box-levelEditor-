@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://v0kptow445jw"]
+[gd_scene load_steps=20 format=3 uid="uid://v0kptow445jw"]
 
 [ext_resource type="PackedScene" uid="uid://b7vscdvub1chb" path="res://Prefabs/Tools/ToolHolder.tscn" id="1_3fwnl"]
 [ext_resource type="PackedScene" uid="uid://b2nu0mfm41p4c" path="res://Prefabs/Camera/camera_node.tscn" id="1_flgxu"]
@@ -15,20 +15,11 @@
 [ext_resource type="Theme" uid="uid://cxwuacxqrpe82" path="res://Graphical/Resourses/ToolsButton.tres" id="7_102ji"]
 [ext_resource type="Script" path="res://Scripts/Interface/ProgrammSpace.gd" id="10_2lt7l"]
 [ext_resource type="Script" path="res://Scripts/FileManager/Loader.gd" id="10_pyvue"]
-[ext_resource type="PackedScene" uid="uid://dsxvp2by4a56m" path="res://Prefabs/UI/pop_up_features.tscn" id="11_sachx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8bisw"]
 render_priority = 0
 shader = ExtResource("5_d2rle")
 shader_parameter/albedo = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb2lb"]
-bg_color = Color(0.0431373, 0.0431373, 0.0431373, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q0obc"]
 bg_color = Color(0.235294, 0.235294, 0.235294, 1)
@@ -40,6 +31,14 @@ border_color = Color(0.152941, 0.152941, 0.152941, 1)
 shadow_color = Color(0, 0, 0, 0.811765)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0or6n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb2lb"]
+bg_color = Color(0.0431373, 0.0431373, 0.0431373, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
 
 [node name="WorkSpace" type="Node3D" groups=["selected_nodes"]]
 
@@ -94,6 +93,9 @@ GridGenerate = NodePath("../../../GridManager")
 [node name="Move_Tool" parent="3D/ToolHolder" index="1" node_paths=PackedStringArray("TH")]
 TH = NodePath("..")
 
+[node name="Directions" parent="3D/ToolHolder/Move_Tool" index="0" node_paths=PackedStringArray("DoUndo")]
+DoUndo = NodePath("../../../Do-Undo")
+
 [node name="Entity_tool" parent="3D/ToolHolder" index="2" node_paths=PackedStringArray("TH")]
 TH = NodePath("..")
 
@@ -124,57 +126,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="ProgrammSpace" type="Control" parent="UI/UI_actual/MainUI"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 32.0
-grow_horizontal = 2
-script = ExtResource("10_2lt7l")
-
-[node name="ProgrammProperties" type="Panel" parent="UI/UI_actual/MainUI/ProgrammSpace"]
-texture_filter = 1
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_gb2lb")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 32.0
-offset_bottom = 32.0
-grow_horizontal = 2
-theme_override_constants/separation = 16
-
-[node name="File" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme = ExtResource("4_i3qj3")
-text = "Файл"
-
-[node name="Editor Properties" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("4_i3qj3")
-text = "Настройки редактора"
-
-[node name="Project Properies" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("4_i3qj3")
-text = "Настройки проекта"
-
-[node name="Tools" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("4_i3qj3")
-text = "Инструменты"
-
-[node name="ButtonDebugger" type="Node" parent="UI/UI_actual/MainUI/ProgrammSpace"]
-script = ExtResource("5_u6wqp")
 
 [node name="WorkSpace" type="Control" parent="UI/UI_actual/MainUI"]
 layout_mode = 1
@@ -368,8 +319,56 @@ visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0or6n")
 
-[node name="PopUp_Features" parent="UI/UI_actual" instance=ExtResource("11_sachx")]
-process_mode = 4
+[node name="ProgrammSpace" type="Control" parent="UI/UI_actual/MainUI"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+script = ExtResource("10_2lt7l")
+
+[node name="ProgrammProperties" type="Panel" parent="UI/UI_actual/MainUI/ProgrammSpace"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gb2lb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_constants/separation = 16
+
+[node name="File" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("4_i3qj3")
+text = "Файл"
+
+[node name="Editor Properties" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_i3qj3")
+text = "Настройки редактора"
+
+[node name="Project Properies" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_i3qj3")
+text = "Настройки проекта"
+
+[node name="Tools" type="Button" parent="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_i3qj3")
+text = "Инструменты"
+
+[node name="ButtonDebugger" type="Node" parent="UI/UI_actual/MainUI/ProgrammSpace"]
+script = ExtResource("5_u6wqp")
 
 [node name="Systems" type="Node" parent="."]
 
@@ -379,10 +378,6 @@ process_mode = 4
 script = ExtResource("10_pyvue")
 
 [connection signal="gui_input" from="3D/CameraNode/MarginContainer/ViewportContainerMain" to="3D/ToolHolder" method="_on_viewport_container_main_gui_input"]
-[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/File" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"FileBut"]]
-[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/Editor Properties" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"EditorBut"]]
-[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/Project Properies" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"ProjectPropBut"]]
-[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/Tools" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"ToolsBut"]]
 [connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer/GridPlusButton" to="3D/GridManager" method="_on_grid_plus_button_pressed"]
 [connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer/GridMinusButton" to="3D/GridManager" method="_on_grid_minus_button_pressed"]
 [connection signal="toggled" from="UI/UI_actual/MainUI/WorkSpace/MapTools/HBoxContainer/CheckBox" to="3D/GridManager" method="_on_check_box_toggled"]
@@ -390,6 +385,10 @@ script = ExtResource("10_pyvue")
 [connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/LeftPanel/LeftPanContainer/Shelves/ObjTool" to="3D/ToolHolder" method="_on_obj_tool_pressed"]
 [connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer/Shelves/MoveTool" to="3D/ToolHolder" method="_on_move_tool_pressed"]
 [connection signal="pressed" from="UI/UI_actual/MainUI/WorkSpace/WorkSpaceCont/UpperPanelMargin/UpPanel/UpPanContainer/Shelves/RotateTool" to="3D/ToolHolder" method="_on_move_tool_pressed"]
+[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/File" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"FileBut"]]
+[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/Editor Properties" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"EditorBut"]]
+[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/Project Properies" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"ProjectPropBut"]]
+[connection signal="pressed" from="UI/UI_actual/MainUI/ProgrammSpace/ProgrammProperties/HBoxContainer/Tools" to="UI/UI_actual/MainUI/ProgrammSpace/ButtonDebugger" method="_on_pressed" binds= [&"ToolsBut"]]
 
 [editable path="3D/CameraNode"]
 [editable path="3D/ToolHolder"]

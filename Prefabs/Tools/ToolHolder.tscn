@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b7vscdvub1chb"]
+[gd_scene load_steps=17 format=3 uid="uid://b7vscdvub1chb"]
 
 [ext_resource type="Script" path="res://Scripts/Tools/ToolHolder.gd" id="1_absf7"]
 [ext_resource type="ArrayMesh" uid="uid://brp0ruuls2aub" path="res://Prefabs/Tools/ToolHolder.tres" id="2_8frbr"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Tools/BlockTool/BlockTool.gd" id="2_u1i2h"]
 [ext_resource type="Script" path="res://Scripts/Tools/MoveTool/Move_Tool.gd" id="5_g4ego"]
 [ext_resource type="Script" path="res://Scripts/Tools/3DCursor.gd" id="6_g2xgf"]
+[ext_resource type="Script" path="res://Prefabs/Tools/Directions.gd" id="6_p8w77"]
 [ext_resource type="Script" path="res://Scripts/Tools/Drawer.gd" id="7_7ekr6"]
 [ext_resource type="PackedScene" uid="uid://6h1gxhs83vv0" path="res://Prefabs/Tools/EntityTool/entity_tool.tscn" id="7_j8012"]
 [ext_resource type="Material" uid="uid://ipn1qgfre2ea" path="res://Graphical/Materials/wireframe.tres" id="8_nhxa4"]
@@ -78,6 +79,7 @@ text = "TEXT TEXT TEXT"
 script = ExtResource("5_g4ego")
 
 [node name="Directions" type="Node3D" parent="Move_Tool"]
+script = ExtResource("6_p8w77")
 
 [node name="DirX" type="MeshInstance3D" parent="Move_Tool/Directions"]
 layers = 2
@@ -86,7 +88,6 @@ skeleton = NodePath("../../..")
 
 [node name="DirY" type="MeshInstance3D" parent="Move_Tool/Directions"]
 transform = Transform3D(1.31134e-07, 0, -1, 1, -4.37114e-08, 1.31134e-07, -4.37114e-08, -1, -5.73206e-15, 0, 0, 0)
-visible = false
 layers = 2
 mesh = SubResource("ArrayMesh_03do8")
 skeleton = NodePath("../../..")
