@@ -9,10 +9,12 @@ func mov_XZ():
 	hide_all()
 	$DirX.visible = true
 	$DirZ.visible = true
+	print("xz")
 	
 func mov_Y():
 	hide_all()
 	$DirY.visible = true
+	print("y")
 	
 func hide_all():
 	$DirX.visible = false
@@ -20,7 +22,8 @@ func hide_all():
 	$DirZ.visible = false
 	
 func upd_mov(position: Vector3):
-	if DoUndo.get_cur_selected().size() == 0:
-		hide_all()
 	transform.origin = position
 
+func upd_vis():
+	if DoUndo.get_cur_selected().size() == 0:
+		hide_all()
