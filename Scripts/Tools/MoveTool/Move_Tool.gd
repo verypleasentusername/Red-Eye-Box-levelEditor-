@@ -17,6 +17,7 @@ enum TYPE_SELECTION{ OBJ, FACE, EDGE, VERTEX}
 enum MOVE_DIRS{XZ,Y,VIEWPLANE}
 var move_dir = MOVE_DIRS.XZ
 
+
 func event_1(event):
 	var Map = TH.Map
 	#CLICK

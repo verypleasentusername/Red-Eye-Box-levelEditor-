@@ -8,7 +8,7 @@ func _ready() -> void:
 	programm_space.add_command(List, "Новый... +", self.load_map)
 	programm_space.add_command(List, "Открыть... +", self.load_map)
 	List.update_list()
-
+#TODO: actual map reading
 func load_map():
 	var FilePath = "res://SavingData/ReadMe.map"
 	var file = FileAccess.open(FilePath,FileAccess.READ)

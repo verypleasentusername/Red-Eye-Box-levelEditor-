@@ -58,7 +58,7 @@ mouse_filter = 0
 stretch = true
 
 [node name="SubViewportMain" parent="3D/CameraNode/MarginContainer/ViewportContainerMain" index="0"]
-size = Vector2i(960, 592)
+size = Vector2i(2, 2)
 
 [node name="SubViewportContainer" parent="3D/CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D" index="0"]
 offset_right = 0.0
@@ -67,7 +67,7 @@ mouse_filter = 2
 stretch = true
 
 [node name="SubViewportTools" parent="3D/CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D/SubViewportContainer" index="0"]
-size = Vector2i(960, 592)
+size = Vector2i(2, 2)
 
 [node name="ToolHolder" parent="3D" node_paths=PackedStringArray("Camera", "Map", "Brushes", "Entities", "GridManager", "do_undo", "ToolList") instance=ExtResource("1_3fwnl")]
 Camera = NodePath("../CameraNode/MarginContainer/ViewportContainerMain/SubViewportMain/PivotY_And_Move/PivotX/Camera3D")
